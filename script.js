@@ -63,8 +63,23 @@ function renderCalendar(date) {
 
     const td = document.createElement('td');
     td.textContent = day;
-    if (dayEntries.length > 0) td.classList.add('has-entry');
+    const income = dayEntries
+  .filter(e => e.type === 'income')
+  .reduce((sum, e) => sum + e.amount, 0);
 
+const expense = dayEntries
+  .filter(e => e.type === 'expense')
+  .reduce((sum, e) => sum + e.amount, 0);
+
+if (dayEntries.length > 0) {
+  if (income > expense) {
+    td.classList.add('income-day');
+  } else if (expense > income) {
+    td.classList.add('expense-day');
+  } else {
+    td.classList.add('has-entry'); // 동일하면 기본 표시
+  }
+}
     td.addEventListener('click', () => {
       selectedDateEl.textContent = dateStr;
       document.getElementById('date').value=dateStr;

@@ -46,6 +46,17 @@ body {
   #calendar .has-entry {
     background-color: #d0f0c0;
   }
+  .income-day {
+    background-color: #c8f7c5; /* 연초록 */
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .expense-day {
+    background-color: #ffcaca; /* 연빨강 */
+    font-weight: bold;
+    cursor: pointer;
+  }
   
   form input, form select, form button {
     margin: 5px;
