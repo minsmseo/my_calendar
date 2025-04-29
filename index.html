@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>달력 가계부</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- 정산 요약 -->
+    <section class="summary">
+      <h2>📊 이번 달 정산</h2>
+      <p>총 수입: <span id="total-income">0</span>원</p>
+      <p>총 지출: <span id="total-expense">0</span>원</p>
+      <p>잔액: <span id="balance">0</span>원</p>
+    </section>
+
+    <!-- 달력 -->
+    <section class="calendar-section">
+      <h2>📅 달력</h2>
+      <div id="calendar-header">
+        <button id="prev-month">◀</button>
+        <span id="month-title">2025년 4월</span>
+        <button id="next-month">▶</button>
+      </div>
+      <table id="calendar">
+        <!-- JS로 채움 -->
+      </table>
+    </section>
+
+    <!-- 선택한 날짜의 내역 -->
+    <section class="daily-entries">
+      <h2>📋 선택 날짜: <span id="selected-date">날짜 없음</span></h2>
+      <ul id="entry-list"></ul>
+    </section>
+
+    <!-- 입력 폼 -->
+    <section class="input-form">
+      <h2>➕ 항목 추가</h2>
+      <form id="entry-form">
+        <select id="type">
+          <option value="income">수입</option>
+          <option value="expense">지출</option>
+        </select>
+        <input type="text" id="title" placeholder="항목명" required>
+        <input type="number" id="amount" placeholder="금액" required>
+        <input type="date" id="date" required>
+        <input type="text" id="category" placeholder="카테고리">
+        <button type="submit">추가</button>
+      </form>
+    </section>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
