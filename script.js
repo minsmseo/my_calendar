@@ -22,6 +22,7 @@ form.addEventListener('submit', (e) => {
   if (!title || !amount || !date) return;
 
   entries.push({ type, title, amount, date, category });
+  saveEntries(); // localstorage 에 추가
   form.reset();
   renderCalendar(currentDate);
   updateSummary();
@@ -82,9 +83,24 @@ function renderCalendar(date) {
 function renderEntriesByDate(dateStr) {
   entryList.innerHTML = '';
   const filtered = entries.filter(e => e.date === dateStr);
-  filtered.forEach(e => {
+  filtered.forEach((e,index) => {
     const li = document.createElement('li');
     li.textContent = `${e.title} - ${e.amount}원 (${e.category}, ${e.type === 'income' ? '수입' : '지출'})`;
+
+    li.addEventListener('click', () => {
+      if (confirm('이 항목을 삭제할까요?')) {
+        // 해당 날짜에서 index 번째 항목 삭제
+        const entryIndex = entries.findIndex(en => en.date === dateStr && en.title === e.title && en.amount === e.amount && en.category === e.category && en.type === e.type);
+        if (entryIndex !== -1) {
+          entries.splice(entryIndex, 1);
+          saveEntries(); // 삭제 후 저장
+          renderEntriesByDate(dateStr);
+          renderCalendar(currentDate);
+          updateSummary();
+        }
+      }
+    });
+
     entryList.appendChild(li);
   });
 }
@@ -106,7 +122,20 @@ function updateSummary() {
   totalExpenseEl.textContent = expense.toLocaleString();
   balanceEl.textContent = (income - expense).toLocaleString();
 }
+//entries 저장 & 불러오기 함수
+// localStorage에서 불러오기
+function loadEntries() {
+  const saved = localStorage.getItem('entries');
+  entries = saved ? JSON.parse(saved) : [];
+}
+
+// localStorage에 저장
+function saveEntries() {
+  localStorage.setItem('entries', JSON.stringify(entries));
+}
+
 
 // 초기 렌더링
+loadEntries();  //저장된 데이터 불러옴
 renderCalendar(currentDate);
 updateSummary();
